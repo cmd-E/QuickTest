@@ -35,7 +35,6 @@ namespace QuickTest
             this.QuestionTextCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ChoosenVariantCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CorrectVariantCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IsCorrectCol = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.ResultsTable_dgv)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,8 +45,7 @@ namespace QuickTest
             this.QuestionNumberCol,
             this.QuestionTextCol,
             this.ChoosenVariantCol,
-            this.CorrectVariantCol,
-            this.IsCorrectCol});
+            this.CorrectVariantCol});
             this.ResultsTable_dgv.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.ResultsTable_dgv.Location = new System.Drawing.Point(0, 38);
             this.ResultsTable_dgv.Name = "ResultsTable_dgv";
@@ -62,39 +60,40 @@ namespace QuickTest
             this.AnsweredQuestionsNumber_lbl.Name = "AnsweredQuestionsNumber_lbl";
             this.AnsweredQuestionsNumber_lbl.Size = new System.Drawing.Size(560, 35);
             this.AnsweredQuestionsNumber_lbl.TabIndex = 1;
-            this.AnsweredQuestionsNumber_lbl.Text = "label1";
+            this.AnsweredQuestionsNumber_lbl.Text = "Отвечено: X/X";
             this.AnsweredQuestionsNumber_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // QuestionNumberCol
             // 
+            this.QuestionNumberCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
             this.QuestionNumberCol.HeaderText = "#";
             this.QuestionNumberCol.Name = "QuestionNumberCol";
             this.QuestionNumberCol.ReadOnly = true;
+            this.QuestionNumberCol.Width = 21;
             // 
             // QuestionTextCol
             // 
+            this.QuestionTextCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.QuestionTextCol.HeaderText = "Вопрос";
             this.QuestionTextCol.Name = "QuestionTextCol";
             this.QuestionTextCol.ReadOnly = true;
+            this.QuestionTextCol.Width = 69;
             // 
             // ChoosenVariantCol
             // 
+            this.ChoosenVariantCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.ChoosenVariantCol.HeaderText = "Выбранный вариант";
             this.ChoosenVariantCol.Name = "ChoosenVariantCol";
             this.ChoosenVariantCol.ReadOnly = true;
+            this.ChoosenVariantCol.Width = 123;
             // 
             // CorrectVariantCol
             // 
+            this.CorrectVariantCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.CorrectVariantCol.HeaderText = "Правильный варинат";
             this.CorrectVariantCol.Name = "CorrectVariantCol";
             this.CorrectVariantCol.ReadOnly = true;
-            // 
-            // IsCorrectCol
-            // 
-            this.IsCorrectCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.IsCorrectCol.HeaderText = "Верно";
-            this.IsCorrectCol.Name = "IsCorrectCol";
-            this.IsCorrectCol.ReadOnly = true;
+            this.CorrectVariantCol.Width = 128;
             // 
             // ResultsWindow
             // 
@@ -113,11 +112,10 @@ namespace QuickTest
         #endregion
 
         private System.Windows.Forms.DataGridView ResultsTable_dgv;
+        private System.Windows.Forms.Label AnsweredQuestionsNumber_lbl;
         private System.Windows.Forms.DataGridViewTextBoxColumn QuestionNumberCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn QuestionTextCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn ChoosenVariantCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn CorrectVariantCol;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn IsCorrectCol;
-        private System.Windows.Forms.Label AnsweredQuestionsNumber_lbl;
     }
 }

@@ -1,39 +1,61 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace QuickTest
 {
     public partial class TestWindow : Form
     {
+        /// <summary>
+        /// All questions pased from document
+        /// </summary>
         private List<Question> _questions { get; set; }
-        private List<Question> _questionsForTests { get; set; } = new List<Question>();
-        private Dictionary<int, string> _answers { get; set; } = new Dictionary<int, string>();
-        private Dictionary<int, int> _cbPosition { get; set; } = new Dictionary<int, int>();
+        /// <summary>
+        /// Questions randomly selected for test
+        /// </summary>
+        private List<Question> _questionsForTests { get; set; }
+        /// <summary>
+        /// Holds text of selected variant. Used to compare selected variants with correct ones
+        /// </summary>
+        private Dictionary<int, string> _answers { get; set; }
+        /// <summary>
+        /// Holds selected radiobutton of each question
+        /// </summary>
+        private Dictionary<int, int> _cbPosition { get; set; }
+        /// <summary>
+        /// Index of question user is currently on
+        /// </summary>
         private int _currentQuestionIndex = 0;
+        /// <summary>
+        /// Contains all question squares of scrollable menu
+        /// </summary>
+        private readonly Panel[] _questionsSquares;
+        /// <summary>
+        /// Number which is used when hovering above questions squares to change rgb values by it's value
+        /// </summary>
+        private const int changeColorByNumber = 20;
+        private readonly Random _random;
         public TestWindow(List<Question> questions, int numOfQuestions)
         {
+            _random = new Random();
             _questions = questions;
+            _cbPosition = new Dictionary<int, int>();
+            _answers = new Dictionary<int, string>();
             _questionsForTests = RetrieveRandomQuestions(numOfQuestions);
-            //for (int i = 0; i < numOfQuestions; i++)
-            //{
-            //    _cbPosition.Add(i, 1);
-            //}
             InitializeComponent();
-            foreach (Control control in this.Controls)
+            foreach (Control control in Controls)
             {
-                if (control is RadioButton)
+                if (control is CheckBox cb)
                 {
-                    var rb = control as RadioButton;
-                    rb.CheckedChanged += AnswerQuestion;
+                    cb.Click += AnswerQuestion;
                 }
             }
+            // Generate scrollable menu which holds all question squares
+            _questionsSquares = new Panel[numOfQuestions];
+            var _questionSquaresIndex = 0;
             var xPoint = 3;
             for (int i = 1; i <= numOfQuestions; i++)
             {
@@ -41,7 +63,7 @@ namespace QuickTest
                 {
                     Height = 30,
                     Width = 30,
-                    BackColor = Color.Aqua,
+                    BackColor = Color.LightSeaGreen,
                 };
                 Label l = new Label
                 {
@@ -61,9 +83,8 @@ namespace QuickTest
                     Y = 3
                 };
                 TestsScroll_panel.Controls.Add(p);
-                xPoint += 30;
-                xPoint += 5;
-
+                _questionsSquares[_questionSquaresIndex++] = p;
+                xPoint += 35;
             }
         }
 
@@ -72,70 +93,124 @@ namespace QuickTest
             _currentQuestionIndex = Convert.ToInt32((sender as Label).Text) - 1;
             SetQuestion(_currentQuestionIndex);
         }
-
+        /// <summary>
+        /// Event for color change of label in scrollable menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void L_MouseLeave(object sender, EventArgs e)
         {
-            this.Cursor = Cursors.Default;
-            var lbl = sender as Label;
-            Panel p = lbl.Parent as Panel;
-            p.BackColor = Color.Aqua;
+            Cursor = Cursors.Default;
+            Panel p = (sender as Label).Parent as Panel;
+            int newR,
+                newG,
+                newB;
+            if (p.BackColor.R + changeColorByNumber >= 255) { newR = 255; }
+            else newR = p.BackColor.R + changeColorByNumber;
+            if (p.BackColor.G + changeColorByNumber >= 255) { newG = 255; }
+            else newG = p.BackColor.G + changeColorByNumber;
+            if (p.BackColor.B + changeColorByNumber >= 255) { newB = 255; }
+            else newB = p.BackColor.B + changeColorByNumber;
+            p.BackColor = Color.FromArgb(newR, newG, newB);
         }
 
+        /// <summary>
+        /// Event for color change of label in scrollable menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void L_MouseHover(object sender, EventArgs e)
         {
-            this.Cursor = Cursors.Hand;
-            var lbl = sender as Label;
-            Panel p = lbl.Parent as Panel;
-            p.BackColor = Color.Black;
-        }
+            Cursor = Cursors.Hand;
+            Panel p = (sender as Label).Parent as Panel;
+            int newR,
+                newG,
+                newB;
+            if (p.BackColor.R - changeColorByNumber <= 0) { newR = 0; }
+            else newR = p.BackColor.R - changeColorByNumber;
+            if (p.BackColor.G - changeColorByNumber <= 0) { newG = 0; }
+            else newG = p.BackColor.G - changeColorByNumber;
+            if (p.BackColor.B - changeColorByNumber <= 0) { newB = 0; }
+            else newB = p.BackColor.B - changeColorByNumber;
+            p.BackColor = Color.FromArgb(newR, newG, newB);
 
+
+        }
+        /// <summary>
+        /// Unchecks rest of the checkboxes, stores selected variant's text and selected checkbox number in correspoding dictionaries
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AnswerQuestion(object sender, EventArgs e)
         {
-            if (!(sender as RadioButton).Checked) return;
-            if (_answers.ContainsKey(_currentQuestionIndex))
+            if (!(sender as CheckBox).Checked)
             {
-                _answers[_currentQuestionIndex] = (sender as RadioButton).Text;
+                _answers.Remove(_currentQuestionIndex);
+                _cbPosition.Remove(_currentQuestionIndex);
+                _questionsSquares[_currentQuestionIndex].BackColor = Color.LightSeaGreen;
             }
-            else 
+            else
             {
-                _answers.Add(_currentQuestionIndex, (sender as RadioButton).Text);
-            }
+                foreach (var control in Controls)
+                {
+                    if (control is CheckBox cb && cb != (sender as CheckBox))
+                    {
+                        cb.Checked = false;
+                    }
+                }
+                var selectedCheckbox = (sender as CheckBox);
+                if (_answers.ContainsKey(_currentQuestionIndex))
+                {
+                    _answers[_currentQuestionIndex] = selectedCheckbox.Text;
+                }
+                else
+                {
+                    _answers.Add(_currentQuestionIndex, selectedCheckbox.Text);
+                }
 
-            if (_cbPosition.ContainsKey(_currentQuestionIndex))
-            {
-                _cbPosition[_currentQuestionIndex] = Convert.ToInt32((sender as RadioButton).Tag);
+                if (_cbPosition.ContainsKey(_currentQuestionIndex))
+                {
+                    _cbPosition[_currentQuestionIndex] = Convert.ToInt32(selectedCheckbox.Tag);
+                }
+                else
+                {
+                    _cbPosition.Add(_currentQuestionIndex, Convert.ToInt32(selectedCheckbox.Tag));
+                }
+                _questionsSquares[_currentQuestionIndex].BackColor = Color.Lime;
+
             }
-            else 
-            {
-                _cbPosition.Add(_currentQuestionIndex, Convert.ToInt32((sender as RadioButton).Tag));
-            }
-            if (_answers.Count() == _questionsForTests.Count()) 
-            {
-                Done_btn.Enabled = true;
-            }
+            Done_btn.Enabled = _answers.Count() == _questionsForTests.Count();
         }
 
+        /// <summary>
+        /// Gathers random questions from all document parsed tests
+        /// </summary>
+        /// <param name="numberOfQuestions">Number of questions to retrieve</param>
+        /// <returns></returns>
         private List<Question> RetrieveRandomQuestions(int numberOfQuestions)
         {
             Random rand = new Random();
             List<Question> randomQuestions = new List<Question>();
             for (int i = 0; i < numberOfQuestions; i++)
             {
-                var rq = _questions[rand.Next(_questions.Count())];
-                while (_questionsForTests.Contains(rq))
+                var randomQuestion = _questions[rand.Next(_questions.Count())];
+                while (randomQuestions.Contains(randomQuestion))
                 {
-                    rq = _questions[rand.Next(_questions.Count())];
+                    randomQuestion = _questions[rand.Next(_questions.Count())];
                 }
-                rq = ShuffleVariants(rq);
-                randomQuestions.Add(rq);
+                randomQuestion = ShuffleVariants(randomQuestion);
+                randomQuestions.Add(randomQuestion);
             }
             return randomQuestions;
         }
-
+        /// <summary>
+        /// Changes order of variants in question's variants list
+        /// </summary>
+        /// <param name="q">Question which variants must be shuffled</param>
+        /// <returns></returns>
         private Question ShuffleVariants(Question q)
         {
-            var rnd = new Random();
-            var randomized = q.Variants.OrderBy(item => rnd.Next()).ToList();
+            var randomized = q.Variants.OrderBy(item => _random.Next()).ToList();
             q.Variants = randomized;
             return q;
         }
@@ -144,43 +219,63 @@ namespace QuickTest
         {
             SetQuestion(_currentQuestionIndex);
         }
-
+        /// <summary>
+        /// Sets question text and variants to corresponding form controls
+        /// </summary>
+        /// <param name="qIndex">Index of question in _questionsForTests</param>
         private void SetQuestion(int qIndex)
         {
             Question q = _questionsForTests[qIndex];
             int variantIndex = 0;
             Question_lbl.Text = _questionsForTests[qIndex].QuestionText;
-            // If question hasn't been seen add it to position and answers
-            if (!_cbPosition.ContainsKey(qIndex)) _cbPosition.Add(qIndex, 1);
-            if (!_answers.ContainsKey(qIndex)) _answers.Add(qIndex, _questionsForTests[qIndex].Variants[0]);
-            foreach (Control control in this.Controls)
+            foreach (Control control in Controls)
             {
-                if (control is RadioButton)
+                if (control is CheckBox cb)
                 {
-                    var rb = control as RadioButton;
-                    rb.Text = q.Variants[variantIndex++];
-                    rb.Checked = _cbPosition[qIndex] == Convert.ToInt32(rb.Tag); // TODO: check algorithm, wrong checkbox keeps checking
+                    cb.Text = q.Variants[variantIndex++];
+                    if (_cbPosition.ContainsKey(qIndex))
+                    {
+                        cb.Checked = _cbPosition[qIndex] == Convert.ToInt32(cb.Tag);
+                    }
+                    else
+                    {
+                        cb.Checked = false;
+                    }
                 }
             }
-            QuestionNumber_lbl.Text = (qIndex+1).ToString();
+            QuestionNumber_lbl.Text = (qIndex + 1).ToString();
         }
 
+        /// <summary>
+        /// Set next question
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NextQ_btn_Click(object sender, EventArgs e)
         {
             if (_currentQuestionIndex == _questionsForTests.Count() - 1) return;
             SetQuestion(++_currentQuestionIndex);
         }
 
-        // TODO: check radiobutton position on click
+        /// <summary>
+        /// Set previous question
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PrevQ_btn_Click(object sender, EventArgs e)
         {
             if (_currentQuestionIndex == 0) return;
             SetQuestion(--_currentQuestionIndex);
         }
 
+        /// <summary>
+        /// Show test result
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Done_btn_Click(object sender, EventArgs e)
         {
-            ResultsWindow rw = new ResultsWindow();
+            ResultsWindow rw = new ResultsWindow(_questionsForTests, _answers);
             rw.Show();
         }
     }

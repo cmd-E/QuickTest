@@ -30,16 +30,16 @@ namespace QuickTest
         private void InitializeComponent()
         {
             this.Question_lbl = new System.Windows.Forms.Label();
-            this.Variant1_rb = new System.Windows.Forms.RadioButton();
-            this.Variant2_rb = new System.Windows.Forms.RadioButton();
-            this.Variant3_rb = new System.Windows.Forms.RadioButton();
-            this.Variant4_rb = new System.Windows.Forms.RadioButton();
-            this.Variant5_rb = new System.Windows.Forms.RadioButton();
             this.NextQ_btn = new System.Windows.Forms.Button();
             this.PrevQ_btn = new System.Windows.Forms.Button();
             this.Done_btn = new System.Windows.Forms.Button();
             this.TestsScroll_panel = new System.Windows.Forms.Panel();
             this.QuestionNumber_lbl = new System.Windows.Forms.Label();
+            this.Variant1_cb = new System.Windows.Forms.CheckBox();
+            this.Variant2_cb = new System.Windows.Forms.CheckBox();
+            this.Variant3_cb = new System.Windows.Forms.CheckBox();
+            this.Variant4_cb = new System.Windows.Forms.CheckBox();
+            this.Variant5_cb = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // Question_lbl
@@ -50,66 +50,6 @@ namespace QuickTest
             this.Question_lbl.Size = new System.Drawing.Size(49, 13);
             this.Question_lbl.TabIndex = 0;
             this.Question_lbl.Text = "Question";
-            // 
-            // Variant1_rb
-            // 
-            this.Variant1_rb.AutoSize = true;
-            this.Variant1_rb.Location = new System.Drawing.Point(39, 71);
-            this.Variant1_rb.Name = "Variant1_rb";
-            this.Variant1_rb.Size = new System.Drawing.Size(58, 17);
-            this.Variant1_rb.TabIndex = 1;
-            this.Variant1_rb.TabStop = true;
-            this.Variant1_rb.Tag = "1";
-            this.Variant1_rb.Text = "Variant";
-            this.Variant1_rb.UseVisualStyleBackColor = true;
-            // 
-            // Variant2_rb
-            // 
-            this.Variant2_rb.AutoSize = true;
-            this.Variant2_rb.Location = new System.Drawing.Point(39, 107);
-            this.Variant2_rb.Name = "Variant2_rb";
-            this.Variant2_rb.Size = new System.Drawing.Size(58, 17);
-            this.Variant2_rb.TabIndex = 2;
-            this.Variant2_rb.TabStop = true;
-            this.Variant2_rb.Tag = "2";
-            this.Variant2_rb.Text = "Variant";
-            this.Variant2_rb.UseVisualStyleBackColor = true;
-            // 
-            // Variant3_rb
-            // 
-            this.Variant3_rb.AutoSize = true;
-            this.Variant3_rb.Location = new System.Drawing.Point(39, 144);
-            this.Variant3_rb.Name = "Variant3_rb";
-            this.Variant3_rb.Size = new System.Drawing.Size(58, 17);
-            this.Variant3_rb.TabIndex = 3;
-            this.Variant3_rb.TabStop = true;
-            this.Variant3_rb.Tag = "3";
-            this.Variant3_rb.Text = "Variant";
-            this.Variant3_rb.UseVisualStyleBackColor = true;
-            // 
-            // Variant4_rb
-            // 
-            this.Variant4_rb.AutoSize = true;
-            this.Variant4_rb.Location = new System.Drawing.Point(39, 176);
-            this.Variant4_rb.Name = "Variant4_rb";
-            this.Variant4_rb.Size = new System.Drawing.Size(58, 17);
-            this.Variant4_rb.TabIndex = 4;
-            this.Variant4_rb.TabStop = true;
-            this.Variant4_rb.Tag = "4";
-            this.Variant4_rb.Text = "Variant";
-            this.Variant4_rb.UseVisualStyleBackColor = true;
-            // 
-            // Variant5_rb
-            // 
-            this.Variant5_rb.AutoSize = true;
-            this.Variant5_rb.Location = new System.Drawing.Point(39, 209);
-            this.Variant5_rb.Name = "Variant5_rb";
-            this.Variant5_rb.Size = new System.Drawing.Size(58, 17);
-            this.Variant5_rb.TabIndex = 5;
-            this.Variant5_rb.TabStop = true;
-            this.Variant5_rb.Tag = "5";
-            this.Variant5_rb.Text = "Variant";
-            this.Variant5_rb.UseVisualStyleBackColor = true;
             // 
             // NextQ_btn
             // 
@@ -133,6 +73,7 @@ namespace QuickTest
             // 
             // Done_btn
             // 
+            this.Done_btn.Enabled = false;
             this.Done_btn.Location = new System.Drawing.Point(670, 327);
             this.Done_btn.Name = "Done_btn";
             this.Done_btn.Size = new System.Drawing.Size(118, 23);
@@ -160,21 +101,76 @@ namespace QuickTest
             this.QuestionNumber_lbl.TabIndex = 0;
             this.QuestionNumber_lbl.Text = "QuestionNumber_lbl";
             // 
+            // Variant1_cb
+            // 
+            this.Variant1_cb.AutoSize = true;
+            this.Variant1_cb.Location = new System.Drawing.Point(39, 75);
+            this.Variant1_cb.Name = "Variant1_cb";
+            this.Variant1_cb.Size = new System.Drawing.Size(65, 17);
+            this.Variant1_cb.TabIndex = 11;
+            this.Variant1_cb.Tag = "1";
+            this.Variant1_cb.Text = "Variant1";
+            this.Variant1_cb.UseVisualStyleBackColor = true;
+            // 
+            // Variant2_cb
+            // 
+            this.Variant2_cb.AutoSize = true;
+            this.Variant2_cb.Location = new System.Drawing.Point(39, 111);
+            this.Variant2_cb.Name = "Variant2_cb";
+            this.Variant2_cb.Size = new System.Drawing.Size(65, 17);
+            this.Variant2_cb.TabIndex = 12;
+            this.Variant2_cb.Tag = "2";
+            this.Variant2_cb.Text = "Variant2";
+            this.Variant2_cb.UseVisualStyleBackColor = true;
+            // 
+            // Variant3_cb
+            // 
+            this.Variant3_cb.AutoSize = true;
+            this.Variant3_cb.Location = new System.Drawing.Point(39, 148);
+            this.Variant3_cb.Name = "Variant3_cb";
+            this.Variant3_cb.Size = new System.Drawing.Size(65, 17);
+            this.Variant3_cb.TabIndex = 13;
+            this.Variant3_cb.Tag = "3";
+            this.Variant3_cb.Text = "Variant3";
+            this.Variant3_cb.UseVisualStyleBackColor = true;
+            // 
+            // Variant4_cb
+            // 
+            this.Variant4_cb.AutoSize = true;
+            this.Variant4_cb.Location = new System.Drawing.Point(39, 180);
+            this.Variant4_cb.Name = "Variant4_cb";
+            this.Variant4_cb.Size = new System.Drawing.Size(65, 17);
+            this.Variant4_cb.TabIndex = 14;
+            this.Variant4_cb.Tag = "4";
+            this.Variant4_cb.Text = "Variant4";
+            this.Variant4_cb.UseVisualStyleBackColor = true;
+            // 
+            // Variant5_cb
+            // 
+            this.Variant5_cb.AutoSize = true;
+            this.Variant5_cb.Location = new System.Drawing.Point(39, 213);
+            this.Variant5_cb.Name = "Variant5_cb";
+            this.Variant5_cb.Size = new System.Drawing.Size(65, 17);
+            this.Variant5_cb.TabIndex = 15;
+            this.Variant5_cb.Tag = "5";
+            this.Variant5_cb.Text = "Variant5";
+            this.Variant5_cb.UseVisualStyleBackColor = true;
+            // 
             // TestWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 362);
+            this.Controls.Add(this.Variant5_cb);
+            this.Controls.Add(this.Variant4_cb);
+            this.Controls.Add(this.Variant3_cb);
+            this.Controls.Add(this.Variant2_cb);
+            this.Controls.Add(this.Variant1_cb);
             this.Controls.Add(this.QuestionNumber_lbl);
             this.Controls.Add(this.TestsScroll_panel);
             this.Controls.Add(this.Done_btn);
             this.Controls.Add(this.PrevQ_btn);
             this.Controls.Add(this.NextQ_btn);
-            this.Controls.Add(this.Variant5_rb);
-            this.Controls.Add(this.Variant4_rb);
-            this.Controls.Add(this.Variant3_rb);
-            this.Controls.Add(this.Variant2_rb);
-            this.Controls.Add(this.Variant1_rb);
             this.Controls.Add(this.Question_lbl);
             this.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Name = "TestWindow";
@@ -188,15 +184,15 @@ namespace QuickTest
         #endregion
 
         private System.Windows.Forms.Label Question_lbl;
-        private System.Windows.Forms.RadioButton Variant1_rb;
-        private System.Windows.Forms.RadioButton Variant2_rb;
-        private System.Windows.Forms.RadioButton Variant3_rb;
-        private System.Windows.Forms.RadioButton Variant4_rb;
-        private System.Windows.Forms.RadioButton Variant5_rb;
         private System.Windows.Forms.Button NextQ_btn;
         private System.Windows.Forms.Button PrevQ_btn;
         private System.Windows.Forms.Button Done_btn;
         private System.Windows.Forms.Panel TestsScroll_panel;
         private System.Windows.Forms.Label QuestionNumber_lbl;
+        private System.Windows.Forms.CheckBox Variant1_cb;
+        private System.Windows.Forms.CheckBox Variant2_cb;
+        private System.Windows.Forms.CheckBox Variant3_cb;
+        private System.Windows.Forms.CheckBox Variant4_cb;
+        private System.Windows.Forms.CheckBox Variant5_cb;
     }
 }
