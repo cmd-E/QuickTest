@@ -33,10 +33,6 @@ namespace QuickTest
         /// Contains all question squares of scrollable menu
         /// </summary>
         private readonly Panel[] _questionsSquares;
-        /// <summary>
-        /// Number which is used when hovering above questions squares to change rgb values by it's value
-        /// </summary>
-        private const int changeColorByNumber = 20;
         private readonly Random _random;
         public TestWindow(List<Question> questions, int numOfQuestions)
         {
@@ -102,16 +98,7 @@ namespace QuickTest
         {
             Cursor = Cursors.Default;
             Panel p = (sender as Label).Parent as Panel;
-            int newR,
-                newG,
-                newB;
-            if (p.BackColor.R + changeColorByNumber >= 255) { newR = 255; }
-            else newR = p.BackColor.R + changeColorByNumber;
-            if (p.BackColor.G + changeColorByNumber >= 255) { newG = 255; }
-            else newG = p.BackColor.G + changeColorByNumber;
-            if (p.BackColor.B + changeColorByNumber >= 255) { newB = 255; }
-            else newB = p.BackColor.B + changeColorByNumber;
-            p.BackColor = Color.FromArgb(newR, newG, newB);
+            p.BackColor = _answers.ContainsKey(Convert.ToInt32((p.Controls[0] as Label).Text) - 1) ? Color.Lime : Color.LightSeaGreen;
         }
 
         /// <summary>
@@ -123,18 +110,8 @@ namespace QuickTest
         {
             Cursor = Cursors.Hand;
             Panel p = (sender as Label).Parent as Panel;
-            int newR,
-                newG,
-                newB;
-            if (p.BackColor.R - changeColorByNumber <= 0) { newR = 0; }
-            else newR = p.BackColor.R - changeColorByNumber;
-            if (p.BackColor.G - changeColorByNumber <= 0) { newG = 0; }
-            else newG = p.BackColor.G - changeColorByNumber;
-            if (p.BackColor.B - changeColorByNumber <= 0) { newB = 0; }
-            else newB = p.BackColor.B - changeColorByNumber;
-            p.BackColor = Color.FromArgb(newR, newG, newB);
-
-
+            p.BackColor = Color.MediumSeaGreen;
+            //p.BackColor = ControlPaint.Dark(p.BackColor);
         }
         /// <summary>
         /// Unchecks rest of the checkboxes, stores selected variant's text and selected checkbox number in correspoding dictionaries

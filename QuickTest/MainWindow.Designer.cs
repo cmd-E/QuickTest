@@ -29,6 +29,7 @@ namespace QuickTest
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.chooseTestBtn = new System.Windows.Forms.Button();
             this.testPathLbl = new System.Windows.Forms.Label();
             this.numberOfQuestions_ud = new System.Windows.Forms.NumericUpDown();
@@ -59,7 +60,7 @@ namespace QuickTest
             // 
             // numberOfQuestions_ud
             // 
-            this.numberOfQuestions_ud.Location = new System.Drawing.Point(281, 67);
+            this.numberOfQuestions_ud.Location = new System.Drawing.Point(281, 73);
             this.numberOfQuestions_ud.Name = "numberOfQuestions_ud";
             this.numberOfQuestions_ud.Size = new System.Drawing.Size(59, 20);
             this.numberOfQuestions_ud.TabIndex = 4;
@@ -68,7 +69,7 @@ namespace QuickTest
             // numberOfQuestions_lbl
             // 
             this.numberOfQuestions_lbl.AutoSize = true;
-            this.numberOfQuestions_lbl.Location = new System.Drawing.Point(179, 69);
+            this.numberOfQuestions_lbl.Location = new System.Drawing.Point(179, 75);
             this.numberOfQuestions_lbl.Name = "numberOfQuestions_lbl";
             this.numberOfQuestions_lbl.Size = new System.Drawing.Size(96, 13);
             this.numberOfQuestions_lbl.TabIndex = 5;
@@ -96,6 +97,10 @@ namespace QuickTest
             this.Controls.Add(this.numberOfQuestions_ud);
             this.Controls.Add(this.testPathLbl);
             this.Controls.Add(this.chooseTestBtn);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(543, 136);
             this.Name = "MainWindow";
             this.Text = "QuickTest";
             ((System.ComponentModel.ISupportInitialize)(this.numberOfQuestions_ud)).EndInit();
