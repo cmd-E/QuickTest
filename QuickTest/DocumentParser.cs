@@ -18,69 +18,68 @@ namespace QuickTest
             {
                 Variants = new List<string>()
             };
-            //Opens the Word template document
             WordDocument document;
             try
             {
                 document = new WordDocument(pathToDoc);
             }
-            catch
+            catch(IOException e)
             {
-                MessageBox.Show("Не удалось открыть файл");
+                MessageBox.Show(e.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return questions;
             }
-            //Gets the string that contains whole document content as text
             foreach (WSection section in document.Sections)
             {
-                foreach (WParagraph par in section.Body.Paragraphs)
+                foreach (WParagraph paragraph in section.Body.Paragraphs)
                 {
-                    if (AllChildEntriesOfParagraphAreText(par))
+                    var par = LeaveTextOnly(paragraph);
+                    var sb = new StringBuilder();
+                    foreach (var ce in par.ChildEntities)
                     {
-                        var sb = new StringBuilder();
-                        foreach (var ce in par.ChildEntities)
+                        var txtRange = ce as WTextRange;
+                        sb.Append(txtRange.Text);
+                    }
+                    var p = sb.ToString();
+                    p = p.Trim();
+                    if (p.ToLower().StartsWith("<question>"))
+                    {
+                        localQuestion = new Question
                         {
-                            var txtRange = ce as WTextRange;
-                            sb.Append(txtRange.Text);
-                        }
-                        var p = sb.ToString();
-                        p = p.Trim();
-                        if (p.ToLower().StartsWith("<question>"))
+                            QuestionText = p,
+                            Variants = new List<string>()
+                        };
+                    }
+                    else if (p.Trim().ToLower().StartsWith("<variant>"))
+                    {
+                        if (string.IsNullOrEmpty(localQuestion.CorrectVariant))
                         {
-                            localQuestion = new Question
-                            {
-                                QuestionText = p,
-                                Variants = new List<string>()
-                            };
+                            localQuestion.CorrectVariant = p;
                         }
-                        else if (p.Trim().ToLower().StartsWith("<variant>"))
+                        localQuestion.Variants.Add(p);
+                    }
+                    if (localQuestion.Variants.Count == 5)
+                    {
+                        questions.Add(localQuestion);
+                        localQuestion = new Question
                         {
-                            if (string.IsNullOrEmpty(localQuestion.CorrectVariant))
-                            {
-                                localQuestion.CorrectVariant = p;
-                            }
-                            localQuestion.Variants.Add(p);
-                        }
-                        if (localQuestion.Variants.Count == 5)
-                        {
-                            questions.Add(localQuestion);
-                            localQuestion = new Question
-                            {
-                                Variants = new List<string>()
-                            };
-                        }
+                            Variants = new List<string>()
+                        };
                     }
                 }
             }
             return questions;
         }
 
-        private static bool AllChildEntriesOfParagraphAreText(WParagraph par)
+        private static WParagraph LeaveTextOnly(WParagraph par)
         {
-            foreach (var entry in par.ChildEntities)
+            for (int i = 0; i < par.ChildEntities.Count; i++)
             {
-                if (!(entry is WTextRange)) return false;
+                if (!(par.ChildEntities[i] is WTextRange))
+                {
+                    par.ChildEntities.RemoveAt(i--);
+                }
             }
-            return true;
+            return par;
         }
     }
 }
