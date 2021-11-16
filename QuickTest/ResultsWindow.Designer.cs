@@ -31,12 +31,12 @@ namespace QuickTest
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ResultsWindow));
             this.ResultsTable_dgv = new System.Windows.Forms.DataGridView();
+            this.AnsweredQuestionsNumber_lbl = new System.Windows.Forms.Label();
+            this.showWrongOnly_cb = new System.Windows.Forms.CheckBox();
             this.QuestionNumberCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.QuestionTextCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ChoosenVariantCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CorrectVariantCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AnsweredQuestionsNumber_lbl = new System.Windows.Forms.Label();
-            this.showWrongOnly_cb = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.ResultsTable_dgv)).BeginInit();
             this.SuspendLayout();
             // 
@@ -60,37 +60,6 @@ namespace QuickTest
             this.ResultsTable_dgv.Size = new System.Drawing.Size(560, 276);
             this.ResultsTable_dgv.TabIndex = 0;
             // 
-            // QuestionNumberCol
-            // 
-            this.QuestionNumberCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
-            this.QuestionNumberCol.HeaderText = "#";
-            this.QuestionNumberCol.Name = "QuestionNumberCol";
-            this.QuestionNumberCol.ReadOnly = true;
-            this.QuestionNumberCol.Width = 5;
-            // 
-            // QuestionTextCol
-            // 
-            this.QuestionTextCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.QuestionTextCol.HeaderText = "Вопрос";
-            this.QuestionTextCol.Name = "QuestionTextCol";
-            this.QuestionTextCol.ReadOnly = true;
-            this.QuestionTextCol.Width = 69;
-            // 
-            // ChoosenVariantCol
-            // 
-            this.ChoosenVariantCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.ChoosenVariantCol.HeaderText = "Выбранный вариант";
-            this.ChoosenVariantCol.Name = "ChoosenVariantCol";
-            this.ChoosenVariantCol.ReadOnly = true;
-            this.ChoosenVariantCol.Width = 123;
-            // 
-            // CorrectVariantCol
-            // 
-            this.CorrectVariantCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.CorrectVariantCol.HeaderText = "Правильный варинат";
-            this.CorrectVariantCol.Name = "CorrectVariantCol";
-            this.CorrectVariantCol.ReadOnly = true;
-            // 
             // AnsweredQuestionsNumber_lbl
             // 
             this.AnsweredQuestionsNumber_lbl.Dock = System.Windows.Forms.DockStyle.Top;
@@ -111,6 +80,38 @@ namespace QuickTest
             this.showWrongOnly_cb.Text = "Показать только неправильные";
             this.showWrongOnly_cb.UseVisualStyleBackColor = true;
             this.showWrongOnly_cb.CheckedChanged += new System.EventHandler(this.showWrongOnly_cb_CheckedChanged);
+            // 
+            // QuestionNumberCol
+            // 
+            this.QuestionNumberCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.QuestionNumberCol.HeaderText = "#";
+            this.QuestionNumberCol.Name = "QuestionNumberCol";
+            this.QuestionNumberCol.ReadOnly = true;
+            this.QuestionNumberCol.Width = 39;
+            // 
+            // QuestionTextCol
+            // 
+            this.QuestionTextCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.QuestionTextCol.HeaderText = "Вопрос";
+            this.QuestionTextCol.Name = "QuestionTextCol";
+            this.QuestionTextCol.ReadOnly = true;
+            this.QuestionTextCol.Width = 69;
+            // 
+            // ChoosenVariantCol
+            // 
+            this.ChoosenVariantCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.ChoosenVariantCol.HeaderText = "Выбранный вариант";
+            this.ChoosenVariantCol.Name = "ChoosenVariantCol";
+            this.ChoosenVariantCol.ReadOnly = true;
+            this.ChoosenVariantCol.Width = 123;
+            // 
+            // CorrectVariantCol
+            // 
+            this.CorrectVariantCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.CorrectVariantCol.HeaderText = "Правильный варинат";
+            this.CorrectVariantCol.Name = "CorrectVariantCol";
+            this.CorrectVariantCol.ReadOnly = true;
+            this.CorrectVariantCol.Width = 128;
             // 
             // ResultsWindow
             // 
@@ -134,10 +135,10 @@ namespace QuickTest
 
         private System.Windows.Forms.DataGridView ResultsTable_dgv;
         private System.Windows.Forms.Label AnsweredQuestionsNumber_lbl;
+        private System.Windows.Forms.CheckBox showWrongOnly_cb;
         private System.Windows.Forms.DataGridViewTextBoxColumn QuestionNumberCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn QuestionTextCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn ChoosenVariantCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn CorrectVariantCol;
-        private System.Windows.Forms.CheckBox showWrongOnly_cb;
     }
 }
