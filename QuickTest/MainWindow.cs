@@ -16,6 +16,16 @@ namespace QuickTest
         public MainWindow()
         {
             InitializeComponent();
+            QuestionTag_tb.Text = Properties.Settings.Default.QuestionTag;
+            VariantTag_tb.Text = Properties.Settings.Default.VariantTag;
+            QuestionTag_tb.KeyUp += TagTextBoxes_KeyUp;
+            VariantTag_tb.KeyUp += TagTextBoxes_KeyUp;
+            chooseTestBtn.Enabled = !string.IsNullOrEmpty(QuestionTag_tb.Text) && !string.IsNullOrEmpty(VariantTag_tb.Text);
+        }
+
+        private void TagTextBoxes_KeyUp(object sender, KeyEventArgs e)
+        {
+            chooseTestBtn.Enabled = !string.IsNullOrEmpty(QuestionTag_tb.Text) && !string.IsNullOrEmpty(VariantTag_tb.Text);
         }
 
         private void ChooseTestBtn_Click(object sender, EventArgs e)
@@ -29,11 +39,17 @@ namespace QuickTest
                 numberOfQuestions_lbl.Visible = true;
                 numberOfQuestions_ud.Visible = true;
                 testPathLbl.Text = ofd.FileName;
-                Questions = DocumentParser.ParseTest(ofd.FileName);
+                Questions = DocumentParser.ParseTest(ofd.FileName, QuestionTag_tb.Text.Trim(), VariantTag_tb.Text.Trim()); ;
                 numberOfQuestions_ud.Minimum = 1;
                 numberOfQuestions_ud.Maximum = Questions.Count();
                 numberOfQuestions_ud.Value = Questions.Count();
-                StartTest_btn.Enabled = Questions.Count() != 0;
+                StartTest_btn.Enabled = Questions.Count() != 0 && !string.IsNullOrEmpty(QuestionTag_tb.Text.Trim()) && !string.IsNullOrEmpty(VariantTag_tb.Text.Trim());
+                if (StartTest_btn.Enabled)
+                {
+                    Properties.Settings.Default.QuestionTag = QuestionTag_tb.Text.Trim();
+                    Properties.Settings.Default.VariantTag= VariantTag_tb.Text.Trim();
+                    Properties.Settings.Default.Save();
+                }
             }
         }
 

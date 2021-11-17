@@ -11,8 +11,17 @@ namespace QuickTest
 {
     internal static class DocumentParser
     {
-        public static List<Question> ParseTest(string pathToDoc)
+        /// <summary>
+        /// Collects all questions and it's variants to list of type questions
+        /// </summary>
+        /// <param name="pathToDoc">Path to document with test</param>
+        /// <param name="questionTag">Prefix of the string that marks question</param>
+        /// <param name="variantTag">Prefix of the string that marks variant</param>
+        /// <returns></returns>
+        public static List<Question> ParseTest(string pathToDoc, string questionTag, string variantTag)
         {
+            questionTag = questionTag.Trim();
+            variantTag = variantTag.Trim();
             List<Question> questions = new List<Question>();
             Question localQuestion = new Question
             {
@@ -41,7 +50,7 @@ namespace QuickTest
                     }
                     var p = sb.ToString();
                     p = p.Trim();
-                    if (p.ToLower().StartsWith("<question>"))
+                    if (p.ToLower().StartsWith(questionTag))
                     {
                         localQuestion = new Question
                         {
@@ -49,7 +58,7 @@ namespace QuickTest
                             Variants = new List<string>()
                         };
                     }
-                    else if (p.Trim().ToLower().StartsWith("<variant>"))
+                    else if (p.Trim().ToLower().StartsWith(variantTag))
                     {
                         if (string.IsNullOrEmpty(localQuestion.CorrectVariant))
                         {

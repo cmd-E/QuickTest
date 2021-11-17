@@ -48,6 +48,7 @@ namespace QuickTest
             // Question_lbl
             // 
             this.Question_lbl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Question_lbl.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.Question_lbl.Dock = System.Windows.Forms.DockStyle.Top;
             this.Question_lbl.Location = new System.Drawing.Point(0, 0);
             this.Question_lbl.MinimumSize = new System.Drawing.Size(800, 72);
