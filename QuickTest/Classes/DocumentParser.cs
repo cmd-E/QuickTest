@@ -41,20 +41,13 @@ namespace QuickTest.Classes
             {
                 foreach (WParagraph paragraph in section.Body.Paragraphs)
                 {
-                    var par = LeaveTextOnly(paragraph);
-                    var sb = new StringBuilder();
-                    foreach (var ce in par.ChildEntities)
-                    {
-                        var txtRange = ce as WTextRange;
-                        sb.Append(txtRange.Text);
-                    }
-                    var p = sb.ToString();
+                    var p = paragraph.Text;
                     p = p.Trim();
                     if (p.ToLower().StartsWith(questionTag))
                     {
                         localQuestion = new Question
                         {
-                            QuestionText = p,
+                            QuestionText = p.Remove(0, questionTag.Length).Trim(),
                             Variants = new List<string>()
                         };
                     }
@@ -62,9 +55,9 @@ namespace QuickTest.Classes
                     {
                         if (string.IsNullOrEmpty(localQuestion.CorrectVariant))
                         {
-                            localQuestion.CorrectVariant = p;
+                            localQuestion.CorrectVariant = p.Remove(0, variantTag.Length).Trim();
                         }
-                        localQuestion.Variants.Add(p);
+                        localQuestion.Variants.Add(p.Remove(0, variantTag.Length).Trim());
                     }
                     if (localQuestion.Variants.Count == 5)
                     {
@@ -77,18 +70,6 @@ namespace QuickTest.Classes
                 }
             }
             return questions;
-        }
-
-        private static WParagraph LeaveTextOnly(WParagraph par)
-        {
-            for (int i = 0; i < par.ChildEntities.Count; i++)
-            {
-                if (!(par.ChildEntities[i] is WTextRange))
-                {
-                    par.ChildEntities.RemoveAt(i--);
-                }
-            }
-            return par;
         }
     }
 }
