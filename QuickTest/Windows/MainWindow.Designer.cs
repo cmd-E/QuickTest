@@ -35,14 +35,14 @@ namespace QuickTest
             this.numberOfQuestions_ud = new System.Windows.Forms.NumericUpDown();
             this.numberOfQuestions_lbl = new System.Windows.Forms.Label();
             this.StartTest_btn = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.TestParameters_gb = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.QuestionTag_tb = new System.Windows.Forms.TextBox();
             this.VariantTag_tb = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.numberOfQuestions_ud)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.TestParameters_gb.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,7 +53,7 @@ namespace QuickTest
             this.chooseTestBtn.Name = "chooseTestBtn";
             this.chooseTestBtn.Size = new System.Drawing.Size(99, 25);
             this.chooseTestBtn.TabIndex = 1;
-            this.chooseTestBtn.Text = "Выбрать тест";
+            this.chooseTestBtn.Text = " Прочитать тест";
             this.chooseTestBtn.UseVisualStyleBackColor = true;
             this.chooseTestBtn.Click += new System.EventHandler(this.ChooseTestBtn_Click);
             // 
@@ -69,21 +69,19 @@ namespace QuickTest
             // 
             // numberOfQuestions_ud
             // 
-            this.numberOfQuestions_ud.Location = new System.Drawing.Point(108, 53);
+            this.numberOfQuestions_ud.Location = new System.Drawing.Point(108, 76);
             this.numberOfQuestions_ud.Name = "numberOfQuestions_ud";
             this.numberOfQuestions_ud.Size = new System.Drawing.Size(59, 20);
             this.numberOfQuestions_ud.TabIndex = 4;
-            this.numberOfQuestions_ud.Visible = false;
             // 
             // numberOfQuestions_lbl
             // 
             this.numberOfQuestions_lbl.AutoSize = true;
-            this.numberOfQuestions_lbl.Location = new System.Drawing.Point(6, 55);
+            this.numberOfQuestions_lbl.Location = new System.Drawing.Point(6, 78);
             this.numberOfQuestions_lbl.Name = "numberOfQuestions_lbl";
             this.numberOfQuestions_lbl.Size = new System.Drawing.Size(96, 13);
             this.numberOfQuestions_lbl.TabIndex = 5;
             this.numberOfQuestions_lbl.Text = "Вопросов в тесте";
-            this.numberOfQuestions_lbl.Visible = false;
             // 
             // StartTest_btn
             // 
@@ -96,19 +94,20 @@ namespace QuickTest
             this.StartTest_btn.UseVisualStyleBackColor = true;
             this.StartTest_btn.Click += new System.EventHandler(this.StartTest_btn_Click);
             // 
-            // groupBox1
+            // TestParameters_gb
             // 
-            this.groupBox1.Controls.Add(this.StartTest_btn);
-            this.groupBox1.Controls.Add(this.numberOfQuestions_lbl);
-            this.groupBox1.Controls.Add(this.numberOfQuestions_ud);
-            this.groupBox1.Controls.Add(this.testPathLbl);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox1.Location = new System.Drawing.Point(0, 127);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(527, 109);
-            this.groupBox1.TabIndex = 7;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Параметры теста";
+            this.TestParameters_gb.Controls.Add(this.StartTest_btn);
+            this.TestParameters_gb.Controls.Add(this.numberOfQuestions_lbl);
+            this.TestParameters_gb.Controls.Add(this.numberOfQuestions_ud);
+            this.TestParameters_gb.Controls.Add(this.testPathLbl);
+            this.TestParameters_gb.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.TestParameters_gb.Enabled = false;
+            this.TestParameters_gb.Location = new System.Drawing.Point(0, 127);
+            this.TestParameters_gb.Name = "TestParameters_gb";
+            this.TestParameters_gb.Size = new System.Drawing.Size(527, 109);
+            this.TestParameters_gb.TabIndex = 7;
+            this.TestParameters_gb.TabStop = false;
+            this.TestParameters_gb.Text = "Параметры теста";
             // 
             // label1
             // 
@@ -165,7 +164,7 @@ namespace QuickTest
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(527, 236);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.TestParameters_gb);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -173,8 +172,8 @@ namespace QuickTest
             this.Name = "MainWindow";
             this.Text = "QuickTest";
             ((System.ComponentModel.ISupportInitialize)(this.numberOfQuestions_ud)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.TestParameters_gb.ResumeLayout(false);
+            this.TestParameters_gb.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
@@ -188,7 +187,7 @@ namespace QuickTest
         private System.Windows.Forms.NumericUpDown numberOfQuestions_ud;
         private System.Windows.Forms.Label numberOfQuestions_lbl;
         private System.Windows.Forms.Button StartTest_btn;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox TestParameters_gb;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox VariantTag_tb;
         private System.Windows.Forms.TextBox QuestionTag_tb;

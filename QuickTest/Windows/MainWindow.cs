@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using QuickTest.Classes;
 
 namespace QuickTest
 {
@@ -43,6 +44,7 @@ namespace QuickTest
                 numberOfQuestions_ud.Minimum = 1;
                 numberOfQuestions_ud.Maximum = Questions.Count();
                 numberOfQuestions_ud.Value = Questions.Count();
+                TestParameters_gb.Enabled = true;
                 StartTest_btn.Enabled = Questions.Count() != 0 && !string.IsNullOrEmpty(QuestionTag_tb.Text.Trim()) && !string.IsNullOrEmpty(VariantTag_tb.Text.Trim());
                 if (StartTest_btn.Enabled)
                 {

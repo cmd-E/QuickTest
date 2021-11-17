@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuickTest
+namespace QuickTest.Classes
 {
     public class Question
     {
