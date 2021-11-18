@@ -43,9 +43,8 @@ namespace QuickTest
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.CreateTest_btn = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.helloWorldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.test1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.test2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutProgramMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.numberOfQuestions_ud)).BeginInit();
             this.TestParameters_gb.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -178,33 +177,27 @@ namespace QuickTest
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.helloWorldToolStripMenuItem});
+            this.AboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(527, 24);
             this.menuStrip1.TabIndex = 9;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // helloWorldToolStripMenuItem
+            // AboutToolStripMenuItem
             // 
-            this.helloWorldToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.test1ToolStripMenuItem,
-            this.test2ToolStripMenuItem});
-            this.helloWorldToolStripMenuItem.Name = "helloWorldToolStripMenuItem";
-            this.helloWorldToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
-            this.helloWorldToolStripMenuItem.Text = "hello world";
+            this.AboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutProgramMenuItem});
+            this.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem";
+            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
+            this.AboutToolStripMenuItem.Text = "Справка";
             // 
-            // test1ToolStripMenuItem
+            // aboutProgramMenuItem
             // 
-            this.test1ToolStripMenuItem.Name = "test1ToolStripMenuItem";
-            this.test1ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.test1ToolStripMenuItem.Text = "test1";
-            // 
-            // test2ToolStripMenuItem
-            // 
-            this.test2ToolStripMenuItem.Name = "test2ToolStripMenuItem";
-            this.test2ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.test2ToolStripMenuItem.Text = "test2";
+            this.aboutProgramMenuItem.Name = "aboutProgramMenuItem";
+            this.aboutProgramMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutProgramMenuItem.Text = "О программе";
+            this.aboutProgramMenuItem.Click += new System.EventHandler(this.aboutProgramMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -249,9 +242,8 @@ namespace QuickTest
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button CreateTest_btn;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem helloWorldToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem test1ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem test2ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem AboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutProgramMenuItem;
     }
 }
 

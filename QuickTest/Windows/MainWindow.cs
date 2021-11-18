@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using QuickTest.Classes;
+using QuickTest.Windows;
 
 namespace QuickTest
 {
@@ -77,7 +78,10 @@ namespace QuickTest
 
         private async void MainWindow_Load(object sender, EventArgs e)
         {
-            await CheckVersion();
+            if (Properties.Settings.Default.CheckForUpdatesAtStartup)
+            {
+                await Task.Run(async () => await CheckVersion());
+            }
         }
 
         private async Task CheckVersion()
@@ -100,6 +104,12 @@ namespace QuickTest
                     await CheckVersion();
                 }
             }
+        }
+
+        private void aboutProgramMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutWindow aboutWindow = new AboutWindow();
+            aboutWindow.ShowDialog();
         }
     }
 }
