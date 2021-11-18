@@ -17,7 +17,7 @@ namespace QuickTest.Classes
         /// <param name="pathToDoc">Path to document with test</param>
         /// <param name="questionTag">Prefix of the string that marks question</param>
         /// <param name="variantTag">Prefix of the string that marks variant</param>
-        /// <returns></returns>
+        /// <returns>List of questions parsed from document</returns>
         public static List<Question> ParseTest(string pathToDoc, string questionTag, string variantTag)
         {
             questionTag = questionTag.Trim();
@@ -70,6 +70,51 @@ namespace QuickTest.Classes
                 }
             }
             return questions;
+        }
+        /// <summary>
+        /// Adds corresponding tags to questions and variants
+        /// </summary>
+        /// <param name="pathToDoc">Path to document which needs to be converted to test</param>
+        /// <param name="questionTag">Prefix of the string that marks question</param>
+        /// <param name="variantTag">Prefix of the string that marks variant</param>
+        /// <returns>Name of new doc with test</returns>
+        public static string CreateTest(string pathToDoc, string questionTag, string variantTag)
+        {
+            questionTag = questionTag.Trim();
+            variantTag = variantTag.Trim();
+            WordDocument document = null;
+            try
+            {
+                document = new WordDocument(pathToDoc);
+            }
+            catch (IOException e)
+            {
+                MessageBox.Show(e.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return string.Empty;
+            }
+            var variantsNumber = 0;
+            foreach (WSection section in document.Sections)
+            {
+                foreach (WParagraph paragraph in section.Paragraphs)
+                {
+                    var p = paragraph.Text;
+                    p = p.Trim();
+                    if (variantsNumber == 0)
+                    {
+                        paragraph.Text = $"{questionTag}{paragraph.Text}";
+                    }
+                    else if (variantsNumber <= 5)
+                    {
+                        paragraph.Text = $"{variantTag}{paragraph.Text}";
+                    }
+                    if (variantsNumber == 5) variantsNumber = 0;
+                    else variantsNumber++;
+                }
+            }
+            // if "C:/user/test/Desktop/test.docx" is passed, this will save modified doc to "C:/user/test/Desktop/test-modified.docx"
+            var modifiedDocFileName = $"{Path.GetDirectoryName(pathToDoc)}\\{Path.GetFileNameWithoutExtension(pathToDoc)}-modified{Path.GetExtension(pathToDoc)}";
+            document.Save(modifiedDocFileName);
+            return modifiedDocFileName;
         }
     }
 }

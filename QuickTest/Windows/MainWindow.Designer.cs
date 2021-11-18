@@ -41,6 +41,7 @@ namespace QuickTest
             this.VariantTag_tb = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.CreateTest_btn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numberOfQuestions_ud)).BeginInit();
             this.TestParameters_gb.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -49,7 +50,7 @@ namespace QuickTest
             // chooseTestBtn
             // 
             this.chooseTestBtn.Enabled = false;
-            this.chooseTestBtn.Location = new System.Drawing.Point(214, 90);
+            this.chooseTestBtn.Location = new System.Drawing.Point(416, 90);
             this.chooseTestBtn.Name = "chooseTestBtn";
             this.chooseTestBtn.Size = new System.Drawing.Size(99, 25);
             this.chooseTestBtn.TabIndex = 1;
@@ -145,6 +146,7 @@ namespace QuickTest
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.CreateTest_btn);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.chooseTestBtn);
             this.groupBox2.Controls.Add(this.VariantTag_tb);
@@ -157,6 +159,16 @@ namespace QuickTest
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Параметры чтения файла";
+            // 
+            // CreateTest_btn
+            // 
+            this.CreateTest_btn.Location = new System.Drawing.Point(12, 90);
+            this.CreateTest_btn.Name = "CreateTest_btn";
+            this.CreateTest_btn.Size = new System.Drawing.Size(99, 25);
+            this.CreateTest_btn.TabIndex = 10;
+            this.CreateTest_btn.Text = "Создать тест";
+            this.CreateTest_btn.UseVisualStyleBackColor = true;
+            this.CreateTest_btn.Click += new System.EventHandler(this.CreateTest_btn_Click);
             // 
             // MainWindow
             // 
@@ -193,6 +205,7 @@ namespace QuickTest
         private System.Windows.Forms.TextBox QuestionTag_tb;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Button CreateTest_btn;
     }
 }
 

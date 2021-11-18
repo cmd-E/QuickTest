@@ -27,6 +27,7 @@ namespace QuickTest
         private void TagTextBoxes_KeyUp(object sender, KeyEventArgs e)
         {
             chooseTestBtn.Enabled = !string.IsNullOrEmpty(QuestionTag_tb.Text) && !string.IsNullOrEmpty(VariantTag_tb.Text);
+            CreateTest_btn.Enabled = !string.IsNullOrEmpty(QuestionTag_tb.Text) && !string.IsNullOrEmpty(VariantTag_tb.Text);
         }
 
         private void ChooseTestBtn_Click(object sender, EventArgs e)
@@ -59,6 +60,18 @@ namespace QuickTest
         {
             TestWindow tw = new TestWindow(Questions, Convert.ToInt32(numberOfQuestions_ud.Value));
             tw.Show();
+        }
+
+        private void CreateTest_btn_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = "Выбрать тест";
+            ofd.Filter = "Documents (*.doc, *.docx)|*.doc;*.docx|All files (*.*)|*.*";
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                var modifiedDocFileName = DocumentParser.CreateTest(ofd.FileName, QuestionTag_tb.Text.Trim(), VariantTag_tb.Text.Trim());
+                MessageBox.Show($"Тест создан\n{modifiedDocFileName}", "Тест создан", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }
