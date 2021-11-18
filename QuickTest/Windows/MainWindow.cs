@@ -17,6 +17,7 @@ namespace QuickTest
         public MainWindow()
         {
             InitializeComponent();
+            // TODO: make checkingg for new version optional
             QuestionTag_tb.Text = Properties.Settings.Default.QuestionTag;
             VariantTag_tb.Text = Properties.Settings.Default.VariantTag;
             QuestionTag_tb.KeyUp += TagTextBoxes_KeyUp;
@@ -50,7 +51,7 @@ namespace QuickTest
                 if (StartTest_btn.Enabled)
                 {
                     Properties.Settings.Default.QuestionTag = QuestionTag_tb.Text.Trim();
-                    Properties.Settings.Default.VariantTag= VariantTag_tb.Text.Trim();
+                    Properties.Settings.Default.VariantTag = VariantTag_tb.Text.Trim();
                     Properties.Settings.Default.Save();
                 }
             }
@@ -71,6 +72,33 @@ namespace QuickTest
             {
                 var modifiedDocFileName = DocumentParser.CreateTest(ofd.FileName, QuestionTag_tb.Text.Trim(), VariantTag_tb.Text.Trim());
                 MessageBox.Show($"Тест создан\n{modifiedDocFileName}", "Тест создан", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private async void MainWindow_Load(object sender, EventArgs e)
+        {
+            await CheckVersion();
+        }
+
+        private async Task CheckVersion()
+        {
+            const string releasesLink = @"https://github.com/cmd-E/QuickTest/releases/latest";
+            var githubResponse = await CheckForUpdates.Check();
+            var thereIsNewVersion = githubResponse.Item1;
+            var versionOnGithub = githubResponse.Item2;
+            if (thereIsNewVersion)
+            {
+                if (MessageBox.Show($"Доступна версия {versionOnGithub}\nНажмите ОК, чтобы перейти на страницу загрузки", "Доступна новая версия", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
+                {
+                    System.Diagnostics.Process.Start(releasesLink);
+                }
+            }
+            else if (versionOnGithub == "-1")
+            {
+                if (MessageBox.Show("Не удалось получить информацию о новых версиях приложения.\nПроверьте ваше соединение с интернетом", "Ошибка сети", MessageBoxButtons.RetryCancel, MessageBoxIcon.Warning) == DialogResult.Retry)
+                {
+                    await CheckVersion();
+                }
             }
         }
     }
