@@ -255,6 +255,7 @@ namespace QuickTest
         {
             ResultsWindow rw = new ResultsWindow(_questionsForTests, _answers);
             rw.Show();
+            Close();
         }
     }
 }

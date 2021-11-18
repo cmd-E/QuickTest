@@ -3,7 +3,7 @@ Testing application. Designed to parse documents and compose tests with 5 answer
 
 # Использование
 - Скачать последнюю версию ([ссылка](https://github.com/cmd-E/QuickTest/releases/latest))
-- Распаковать архив
-- Запустить QuickTest-vX.X.X.exe
+- Установить или распаковать архив
+- Запустить QuickTest.exe
 - Открыть документ с тестами
 - Настроить параметры теста и запустить
