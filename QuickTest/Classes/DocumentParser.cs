@@ -1,120 +1,70 @@
-﻿using Syncfusion.DocIO.DLS;
+using Syncfusion.DocIO.DLS;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace QuickTest.Classes
 {
     internal static class DocumentParser
     {
-        /// <summary>
-        /// Collects all questions and it's variants to list of type questions
-        /// </summary>
-        /// <param name="pathToDoc">Path to document with test</param>
-        /// <param name="questionTag">Prefix of the string that marks question</param>
-        /// <param name="variantTag">Prefix of the string that marks variant</param>
-        /// <returns>List of questions parsed from document</returns>
-        public static List<Question> ParseTest(string pathToDoc, string questionTag, string variantTag)
+        private static void ValidatePath(string path)
         {
-            questionTag = questionTag.Trim();
-            variantTag = variantTag.Trim();
-            List<Question> questions = new List<Question>();
-            Question localQuestion = new Question
-            {
-                Variants = new List<string>()
-            };
-            WordDocument document;
-            try
-            {
-                document = new WordDocument(pathToDoc);
-            }
-            catch(IOException e)
-            {
-                MessageBox.Show(e.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return questions;
-            }
-            foreach (WSection section in document.Sections)
-            {
-                foreach (WParagraph paragraph in section.Body.Paragraphs)
-                {
-                    var p = paragraph.Text;
-                    p = p.Trim();
-                    if (p.ToLower().StartsWith(questionTag))
-                    {
-                        localQuestion = new Question
-                        {
-                            QuestionText = p.Remove(0, questionTag.Length).Trim(),
-                            Variants = new List<string>()
-                        };
-                    }
-                    else if (p.Trim().ToLower().StartsWith(variantTag))
-                    {
-                        if (string.IsNullOrEmpty(localQuestion.CorrectVariant))
-                        {
-                            localQuestion.CorrectVariant = p.Remove(0, variantTag.Length).Trim();
-                        }
-                        localQuestion.Variants.Add(p.Remove(0, variantTag.Length).Trim());
-                    }
-                    if (localQuestion.Variants.Count == 5)
-                    {
-                        questions.Add(localQuestion);
-                        localQuestion = new Question
-                        {
-                            Variants = new List<string>()
-                        };
-                    }
-                }
-            }
-            return questions;
+            string extension = Path.GetExtension(path);
+            if (!string.Equals(extension, ".doc", StringComparison.OrdinalIgnoreCase) &&
+                !string.Equals(extension, ".docx", StringComparison.OrdinalIgnoreCase))
+                throw new ArgumentException("Выберите файл .doc или .docx");
         }
-        /// <summary>
-        /// Adds corresponding tags to questions and variants
-        /// </summary>
-        /// <param name="pathToDoc">Path to document which needs to be converted to test</param>
-        /// <param name="questionTag">Prefix of the string that marks question</param>
-        /// <param name="variantTag">Prefix of the string that marks variant</param>
-        /// <returns>Name of new doc with test</returns>
-        public static string CreateTest(string pathToDoc, string questionTag, string variantTag)
+        public static List<Question> ParseTest(string path, string questionTag, string variantTag)
         {
+            ValidatePath(path);
+            TaggedQuestionParser.ValidateTags(questionTag, variantTag);
+            using (var document = new WordDocument(path))
+            {
+                var paragraphs = new List<string>();
+                foreach (WSection section in document.Sections)
+                    foreach (WParagraph paragraph in section.Body.Paragraphs)
+                        paragraphs.Add(paragraph.Text);
+                return TaggedQuestionParser.Parse(paragraphs, questionTag, variantTag);
+            }
+        }
+        public static string CreateTest(string path, string questionTag, string variantTag)
+        {
+            ValidatePath(path);
+            TaggedQuestionParser.ValidateTags(questionTag, variantTag);
             questionTag = questionTag.Trim();
             variantTag = variantTag.Trim();
-            WordDocument document = null;
+            string target = Path.Combine(Path.GetDirectoryName(path), Path.GetFileNameWithoutExtension(path) +
+                                                                          "-modified" + Path.GetExtension(path));
+            string temporary = Path.Combine(Path.GetDirectoryName(target),
+                                            "." + Guid.NewGuid().ToString("N") + Path.GetExtension(path));
             try
             {
-                document = new WordDocument(pathToDoc);
-            }
-            catch (IOException e)
-            {
-                MessageBox.Show(e.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return string.Empty;
-            }
-            var variantsNumber = 0;
-            foreach (WSection section in document.Sections)
-            {
-                foreach (WParagraph paragraph in section.Paragraphs)
+                using (var document = new WordDocument(path))
                 {
-                    var p = paragraph.Text;
-                    p = p.Trim();
-                    if (variantsNumber == 0)
-                    {
-                        paragraph.Text = $"{questionTag}{paragraph.Text}";
-                    }
-                    else if (variantsNumber <= 5)
-                    {
-                        paragraph.Text = $"{variantTag}{paragraph.Text}";
-                    }
-                    if (variantsNumber == 5) variantsNumber = 0;
-                    else variantsNumber++;
+                    int index = 0;
+                    foreach (WSection section in document.Sections)
+                        foreach (WParagraph paragraph in section.Body.Paragraphs)
+                        {
+                            if (string.IsNullOrWhiteSpace(paragraph.Text))
+                                continue;
+                            paragraph.Text = (index % 6 == 0 ? questionTag : variantTag) + paragraph.Text;
+                            index++;
+                        }
+                    if (index == 0 || index % 6 != 0)
+                        throw new FormatException("Документ должен содержать блоки: вопрос и пять вариантов");
+                    document.Save(temporary);
                 }
+                if (File.Exists(target))
+                    File.Replace(temporary, target, null);
+                else
+                    File.Move(temporary, target);
+                return target;
             }
-            // if "C:/user/test/Desktop/test.docx" is passed, this will save modified doc to "C:/user/test/Desktop/test-modified.docx"
-            var modifiedDocFileName = $"{Path.GetDirectoryName(pathToDoc)}\\{Path.GetFileNameWithoutExtension(pathToDoc)}-modified{Path.GetExtension(pathToDoc)}";
-            document.Save(modifiedDocFileName);
-            return modifiedDocFileName;
+            finally
+            {
+                if (File.Exists(temporary))
+                    File.Delete(temporary);
+            }
         }
     }
 }

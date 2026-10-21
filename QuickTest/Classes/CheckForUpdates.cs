@@ -1,72 +1,94 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using System.Reflection;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text.Json.Nodes;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace QuickTest.Classes
 {
+    public enum UpdateStatus
+    {
+        Available,
+        Current,
+        Failed
+    }
+    public sealed class UpdateResult
+    {
+        public UpdateStatus Status;
+        public string Tag;
+        public UpdateResult(UpdateStatus status, string tag)
+        {
+            Status = status;
+            Tag = tag;
+        }
+    }
+    [DataContract]
+    public sealed class Release
+    {
+        [DataMember(Name = "tag_name")]
+        public string Tag { get; set; }
+    }
     public static class CheckForUpdates
     {
-        private const string authorNick = "cmd-e";
-        private const string repoName = "QuickTest";
-        private const string acceptHeader = "application/vnd.github.v3+json";
-        /// <summary>
-        /// Sends request to github to check if there is a new version
-        /// </summary>
-        /// <returns>boolean, indicating if there is new version and string which contains version tag</returns>
-        public static async Task<Tuple<bool, string>> Check()
+        private static readonly HttpClient Client =
+            new HttpClient { Timeout = TimeSpan.FromSeconds(15), MaxResponseContentBufferSize = 1024 * 1024 };
+        private static readonly SemaphoreSlim Gate = new SemaphoreSlim(1, 1);
+        public static bool TryVersion(string tag, out Version version)
         {
-            var apiUrl = $"https://api.github.com/repos/{authorNick}/{repoName}/releases/latest";
-            var client = new HttpClient();
-            var request = new HttpRequestMessage()
-            {
-                RequestUri = new Uri(apiUrl),
-                Method = HttpMethod.Get,
-            };
-            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptHeader));
-            request.Headers.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:94.0) Gecko/20100101 Firefox/94.0");
-            Task<HttpResponseMessage> response;
-            HttpResponseMessage responseResult;
-            string jsonString = string.Empty; 
+            version = null;
+            if (string.IsNullOrWhiteSpace(tag))
+                return false;
+            tag = tag.Trim();
+            if (tag.StartsWith("v", StringComparison.OrdinalIgnoreCase))
+                tag = tag.Substring(1);
+            if (!Version.TryParse(tag, out version) || version.Build < 0)
+                return false;
+            version = new Version(version.Major, version.Minor, version.Build, Math.Max(0, version.Revision));
+            return true;
+        }
+        public static async Task<UpdateResult> Check()
+        {
+            return await CheckUsing(Client);
+        }
+        internal static async Task<UpdateResult> CheckUsing(HttpClient client)
+        {
+            await Gate.WaitAsync();
             try
             {
-                response = client.SendAsync(request);
-                responseResult = response.Result;
-                jsonString = await responseResult.Content.ReadAsStringAsync();
+                using (var request = new HttpRequestMessage(
+                           HttpMethod.Get, "https://api.github.com/repos/cmd-e/QuickTest/releases/latest"))
+                {
+                    request.Headers.UserAgent.ParseAdd("QuickTest/1.0");
+                    request.Headers.Accept.ParseAdd("application/vnd.github+json");
+                    using (var response = await client.SendAsync(request).ConfigureAwait(false))
+                    {
+                        if (!response.IsSuccessStatusCode)
+                            return new UpdateResult(UpdateStatus.Failed, null);
+                        using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                        {
+                            var release = (Release) new DataContractJsonSerializer(typeof(Release)).ReadObject(stream);
+                            Version remote;
+                            if (release == null || !TryVersion(release.Tag, out remote))
+                                return new UpdateResult(UpdateStatus.Failed, null);
+                            var v = Assembly.GetExecutingAssembly().GetName().Version;
+                            var current = new Version(v.Major, v.Minor, Math.Max(0, v.Build), Math.Max(0, v.Revision));
+                            return new UpdateResult(remote > current ? UpdateStatus.Available : UpdateStatus.Current,
+                                                    release.Tag);
+                        }
+                    }
+                }
             }
-            catch
+            catch (Exception)
             {
-                return new Tuple<bool, string>(false, "-1");
+                return new UpdateResult(UpdateStatus.Failed, null);
             }
-            
-            JsonDocument jsonDocument = JsonDocument.Parse(jsonString);
-            JsonElement root = jsonDocument.RootElement;
-            var versionOnGithub = root.GetProperty("tag_name").GetString();
-            return new Tuple<bool, string>(ThereIsNewVersion(versionOnGithub), versionOnGithub);
-        }
-
-        private static bool ThereIsNewVersion(string versionOnGithub)
-        {
-            var currentV = Assembly.GetExecutingAssembly().GetName().Version;
-            if (versionOnGithub.StartsWith("v")) 
+            finally
             {
-                versionOnGithub = versionOnGithub.Substring(1);
+                Gate.Release();
             }
-            var newVersionSplitted = versionOnGithub.Split('.');
-            // in semantic versioning X.Y.Z are major, minor and patch
-            var major = Convert.ToInt32(newVersionSplitted[0]);
-            var minor = Convert.ToInt32(newVersionSplitted[1]);
-            var patch = Convert.ToInt32(newVersionSplitted[2]);
-            // if something is not the same as latest version from github it means there is new version
-            return major > currentV.Major || minor > currentV.Minor || patch > currentV.Build;
         }
     }
 }

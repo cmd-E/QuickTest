@@ -1,115 +1,135 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using QuickTest.Classes;
 using QuickTest.Windows;
-
 namespace QuickTest
 {
     public partial class MainWindow : Form
     {
-        private List<Question> Questions { get; set; }
+        private List<Question> Questions;
+        private bool busy;
         public MainWindow()
         {
             InitializeComponent();
-            // TODO: make checkingg for new version optional
             QuestionTag_tb.Text = Properties.Settings.Default.QuestionTag;
             VariantTag_tb.Text = Properties.Settings.Default.VariantTag;
             QuestionTag_tb.KeyUp += TagTextBoxes_KeyUp;
             VariantTag_tb.KeyUp += TagTextBoxes_KeyUp;
-            chooseTestBtn.Enabled = !string.IsNullOrEmpty(QuestionTag_tb.Text) && !string.IsNullOrEmpty(VariantTag_tb.Text);
+            RefreshControls();
         }
-
+        private bool ValidTags()
+        {
+            try
+            {
+                TaggedQuestionParser.ValidateTags(QuestionTag_tb.Text, VariantTag_tb.Text);
+                return true;
+            }
+            catch (ArgumentException)
+            {
+                return false;
+            }
+        }
+        private void RefreshControls()
+        {
+            chooseTestBtn.Enabled = CreateTest_btn.Enabled = !busy && ValidTags();
+            QuestionTag_tb.Enabled = VariantTag_tb.Enabled = !busy;
+            TestParameters_gb.Enabled = !busy && Questions != null && Questions.Count > 0;
+            StartTest_btn.Enabled = !busy && Questions != null && Questions.Count > 0 && ValidTags();
+        }
         private void TagTextBoxes_KeyUp(object sender, KeyEventArgs e)
         {
-            chooseTestBtn.Enabled = !string.IsNullOrEmpty(QuestionTag_tb.Text) && !string.IsNullOrEmpty(VariantTag_tb.Text);
-            CreateTest_btn.Enabled = !string.IsNullOrEmpty(QuestionTag_tb.Text) && !string.IsNullOrEmpty(VariantTag_tb.Text);
+            RefreshControls();
         }
-
-        private void ChooseTestBtn_Click(object sender, EventArgs e)
+        private async void ChooseTestBtn_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Title = "Выбрать тест";
-            ofd.Filter = "Documents (*.doc, *.docx)|*.doc;*.docx|All files (*.*)|*.*";
-            if (ofd.ShowDialog() == DialogResult.OK)
+            if (busy)
+                return;
+            using (var dialog =
+                       new OpenFileDialog { Title = "Выбрать тест", Filter = "Documents (*.doc, *.docx)|*.doc;*.docx" })
             {
-                testPathLbl.Visible = true;
-                numberOfQuestions_lbl.Visible = true;
-                numberOfQuestions_ud.Visible = true;
-                testPathLbl.Text = ofd.FileName;
-                Questions = DocumentParser.ParseTest(ofd.FileName, QuestionTag_tb.Text.Trim(), VariantTag_tb.Text.Trim()); ;
-                numberOfQuestions_ud.Minimum = 1;
-                numberOfQuestions_ud.Maximum = Questions.Count();
-                numberOfQuestions_ud.Value = Questions.Count();
-                TestParameters_gb.Enabled = true;
-                StartTest_btn.Enabled = Questions.Count() != 0 && !string.IsNullOrEmpty(QuestionTag_tb.Text.Trim()) && !string.IsNullOrEmpty(VariantTag_tb.Text.Trim());
-                if (StartTest_btn.Enabled)
+                if (dialog.ShowDialog() != DialogResult.OK)
+                    return;
+                string path = dialog.FileName, qTag = QuestionTag_tb.Text, vTag = VariantTag_tb.Text;
+                busy = true;
+                Questions = null;
+                RefreshControls();
+                try
                 {
-                    Properties.Settings.Default.QuestionTag = QuestionTag_tb.Text.Trim();
-                    Properties.Settings.Default.VariantTag = VariantTag_tb.Text.Trim();
+                    var parsed = await Task.Run(() => DocumentParser.ParseTest(path, qTag, vTag));
+                    if (IsDisposed)
+                        return;
+                    Questions = parsed;
+                    testPathLbl.Text = path;
+                    testPathLbl.Visible = numberOfQuestions_lbl.Visible = numberOfQuestions_ud.Visible = true;
+                    numberOfQuestions_ud.Minimum = 1;
+                    numberOfQuestions_ud.Maximum = parsed.Count;
+                    numberOfQuestions_ud.Value = parsed.Count;
+                    Properties.Settings.Default.QuestionTag = qTag.Trim();
+                    Properties.Settings.Default.VariantTag = vTag.Trim();
                     Properties.Settings.Default.Save();
+                }
+                catch (Exception error)
+                {
+                    if (!IsDisposed)
+                        MessageBox.Show(this, error.Message, "Ошибка документа", MessageBoxButtons.OK,
+                                        MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    busy = false;
+                    if (!IsDisposed)
+                        RefreshControls();
                 }
             }
         }
-
         private void StartTest_btn_Click(object sender, EventArgs e)
         {
-            TestWindow tw = new TestWindow(Questions, Convert.ToInt32(numberOfQuestions_ud.Value));
-            tw.Show();
+            if (Questions != null && Questions.Count > 0)
+                new TestWindow(Questions, Convert.ToInt32(numberOfQuestions_ud.Value)).Show();
         }
-
-        private void CreateTest_btn_Click(object sender, EventArgs e)
+        private async void CreateTest_btn_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Title = "Выбрать тест";
-            ofd.Filter = "Documents (*.doc, *.docx)|*.doc;*.docx|All files (*.*)|*.*";
-            if (ofd.ShowDialog() == DialogResult.OK)
+            if (busy)
+                return;
+            using (var dialog =
+                       new OpenFileDialog { Title = "Выбрать тест", Filter = "Documents (*.doc, *.docx)|*.doc;*.docx" })
             {
-                var modifiedDocFileName = DocumentParser.CreateTest(ofd.FileName, QuestionTag_tb.Text.Trim(), VariantTag_tb.Text.Trim());
-                MessageBox.Show($"Тест создан\n{modifiedDocFileName}", "Тест создан", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (dialog.ShowDialog() != DialogResult.OK)
+                    return;
+                string path = dialog.FileName, qTag = QuestionTag_tb.Text, vTag = VariantTag_tb.Text;
+                busy = true;
+                RefreshControls();
+                try
+                {
+                    string output = await Task.Run(() => DocumentParser.CreateTest(path, qTag, vTag));
+                    if (!IsDisposed)
+                        MessageBox.Show(this, "Тест создан\n" + output, "Тест создан", MessageBoxButtons.OK,
+                                        MessageBoxIcon.Information);
+                }
+                catch (Exception error)
+                {
+                    if (!IsDisposed)
+                        MessageBox.Show(this, error.Message, "Ошибка документа", MessageBoxButtons.OK,
+                                        MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    busy = false;
+                    if (!IsDisposed)
+                        RefreshControls();
+                }
             }
         }
-
         private async void MainWindow_Load(object sender, EventArgs e)
         {
             if (Properties.Settings.Default.CheckForUpdatesAtStartup)
-            {
-                await Task.Run(async () => await CheckVersion());
-            }
+                await UpdatePresenter.Show(this, false);
         }
-
-        private async Task CheckVersion()
-        {
-            const string releasesLink = @"https://github.com/cmd-E/QuickTest/releases/latest";
-            var githubResponse = await CheckForUpdates.Check();
-            var thereIsNewVersion = githubResponse.Item1;
-            var versionOnGithub = githubResponse.Item2;
-            if (thereIsNewVersion)
-            {
-                if (MessageBox.Show($"Доступна версия {versionOnGithub}\nНажмите ОК, чтобы перейти на страницу загрузки", "Доступна новая версия", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
-                {
-                    System.Diagnostics.Process.Start(releasesLink);
-                }
-            }
-            else if (versionOnGithub == "-1")
-            {
-                if (MessageBox.Show("Не удалось получить информацию о новых версиях приложения.\nПроверьте ваше соединение с интернетом", "Ошибка сети", MessageBoxButtons.RetryCancel, MessageBoxIcon.Warning) == DialogResult.Retry)
-                {
-                    await CheckVersion();
-                }
-            }
-        }
-
         private void aboutProgramMenuItem_Click(object sender, EventArgs e)
         {
-            AboutWindow aboutWindow = new AboutWindow();
-            aboutWindow.ShowDialog();
+            new AboutWindow().ShowDialog(this);
         }
     }
 }
