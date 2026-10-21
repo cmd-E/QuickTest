@@ -14,7 +14,7 @@ Run in PowerShell on Windows from the repository root:
 ./QuickTestSetup/build-installer.ps1
 ```
 
-The helper restores/builds the application, runs Microsoft's `DisableOutOfProcBuild.exe` from its installation directory, and uses `devenv.com` to rebuild the setup project. The Microsoft helper sets `EnableOutOfProcBuild=0` for the selected Visual Studio instance, as documented for command-line setup builds. An explicit installation can be selected with `-VisualStudioPath`.
+The helper restores/builds the application, runs Microsoft's `DisableOutOfProcBuild.exe` from its installation directory, and uses `devenv.com` to rebuild the dedicated `QuickTestSetup/QuickTestSetup.sln`. This solution contains only the application and installer, avoiding SDK test-project design-time restore during IDE packaging. The Microsoft helper sets `EnableOutOfProcBuild=0` for the selected Visual Studio instance, as documented for command-line setup builds. An explicit installation can be selected with `-VisualStudioPath`.
 
 Outputs are written to `.artifacts/installer/Release/QuickTestSetup.msi` and `setup.exe`. Use `-Configuration Debug` for a debug package. The helper opens the MSI database read-only to check the payload: executable, configuration, four required Syncfusion libraries, icon and license. It does not install the application or execute the bootstrapper.
 
@@ -22,8 +22,10 @@ The CI test job also builds/inspects the MSI and uploads the installer as the `w
 
 ## Compatibility and release notes
 
-- Setup now uses repository-relative paths for the icon, MIT license and restored Word libraries. Obsolete JSON/runtime dependency entries are removed.
-- The existing .NET Framework 4.7.2 minimum allows later 4.x versions, including 4.8/4.8.1 on modern Windows. The application itself still targets 4.6.1.
+- Setup now uses repository-relative paths for the icon, MIT license and restored Word libraries. Obsolete JSON/runtime dependency entries are removed, and the framework-provided HTTP assembly is explicitly excluded so a compile-only reference assembly is not shipped.
+- The MSI condition matches the application's .NET Framework 4.6.1 target and accepts later 4.x runtimes, including 4.8/4.8.1 on modern Windows. The existing bootstrapper offers 4.7.2 when a compatible framework is missing. The application itself is not retargeted.
 - Installation is per-user under `%LOCALAPPDATA%\Programs\QuickTest`, matching the installer's non-elevated scope.
 - The stable upgrade code is preserved and downgrade detection is enabled. Before publishing a new product version, update `ProductVersion`, generate a new `ProductCode` in the setup project's properties, and update the application assembly version together. The checked-in version remains 1.0.4; this work does not invent a release version.
 - Packages are unsigned development artifacts. Signing and a real install/upgrade/uninstall test in a disposable Windows VM remain release-time checks.
+
+The repaired project was built and its eight-file MSI payload and newer-runtime acceptance were verified locally with Visual Studio 2026 and Installer Projects 3.0.0. This verifies package construction, not a real installation on the user's system.

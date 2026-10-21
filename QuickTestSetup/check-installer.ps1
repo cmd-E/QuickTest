@@ -20,8 +20,24 @@ try {
     foreach ($file in $required) {
         if ($file -notin $files) { throw "Installer payload is missing $file." }
     }
-    foreach ($file in @('System.Text.Json.dll', 'System.Memory.dll', 'System.Buffers.dll')) {
-        if ($file -in $files) { throw "Installer still contains the removed dependency $file." }
+    foreach ($file in @('System.Text.Json.dll', 'System.Memory.dll', 'System.Buffers.dll', 'System.Net.Http.dll')) {
+        if ($file -in $files) { throw "Installer contains an obsolete or framework-provided dependency: $file." }
+    }
+    $properties = @{}
+    $view = $database.OpenView('SELECT `Property`,`Value` FROM `Property`')
+    try {
+        $view.Execute()
+        while ($record = $view.Fetch()) {
+            try { $properties[$record.StringData(1)] = $record.StringData(2) }
+            finally { [void][Runtime.InteropServices.Marshal]::FinalReleaseComObject($record) }
+        }
+    } finally {
+        $view.Close()
+        [void][Runtime.InteropServices.Marshal]::FinalReleaseComObject($view)
+    }
+    if ($properties['VSDFrameworkVersion'] -ne 'v4.6.1' -or
+        $properties['VSDAllowLaterFrameworkVersions'] -ne 'True') {
+        throw 'Installer must require .NET Framework 4.6.1 and accept newer 4.x runtimes.'
     }
     Write-Output "Installer payload verified: $($files.Count) files; application, configuration, Word libraries, icon and license included."
 } finally {

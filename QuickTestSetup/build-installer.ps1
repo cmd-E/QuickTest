@@ -26,9 +26,15 @@ try {
 $output = Join-Path $root ('.artifacts/installer/' + $Configuration)
 New-Item -ItemType Directory -Path $output -Force | Out-Null
 $log = Join-Path $output 'build.log'
-$arguments = @(('"' + (Join-Path $root 'QuickTest.sln') + '"'), '/Rebuild', $Configuration,
-    '/Project', ('"' + (Join-Path $PSScriptRoot 'QuickTestSetup.vdproj') + '"'),
-    '/ProjectConfig', $Configuration, '/Out', ('"' + $log + '"'))
+# A previous successful MSI must not conceal a later build that produced no output.
+foreach ($name in @('QuickTestSetup.msi', 'setup.exe')) {
+    $previous = Join-Path $output $name
+    if (Test-Path -LiteralPath $previous) { Remove-Item -LiteralPath $previous }
+}
+# Keep IDE setup builds separate from SDK test-project design-time restoration.
+if (Test-Path -LiteralPath $log) { Remove-Item -LiteralPath $log }
+$arguments = @(('"' + (Join-Path $PSScriptRoot 'QuickTestSetup.sln') + '"'), '/Rebuild', $Configuration,
+    '/Out', ('"' + $log + '"'))
 $process = Start-Process -FilePath $devenv -ArgumentList $arguments -WindowStyle Hidden -Wait -PassThru
 if ($process.ExitCode -ne 0) {
     if (Test-Path -LiteralPath $log) { Get-Content -LiteralPath $log -Tail 35 }
