@@ -23,7 +23,10 @@ namespace QuickTest.Classes
         {
             var hsl = this;
             if (hsl.s == 0)
-            { int L = (int)hsl.v; return Color.FromArgb(255, L, L, L); }
+            {
+                int lightness = (int)(255 * hsl.v);
+                return Color.FromArgb(255, lightness, lightness, lightness);
+            }
 
             double min, max, h;
             h = hsl.h / 360d;

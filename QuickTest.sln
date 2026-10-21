@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickTest", "QuickTest\Quic
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "QuickTestSetup", "QuickTestSetup\QuickTestSetup.vdproj", "{C6559BC7-6946-4A6F-99EE-6889BAB44424}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickTest.Tests", "QuickTest.Tests\QuickTest.Tests.csproj", "{FFFDB709-D0D2-4ECB-B0D3-F242AE1BFAC0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,9 +19,13 @@ Global
 		{D763E45B-A6FB-49DF-886F-137BCEC42347}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D763E45B-A6FB-49DF-886F-137BCEC42347}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D763E45B-A6FB-49DF-886F-137BCEC42347}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C6559BC7-6946-4A6F-99EE-6889BAB44424}.Debug|Any CPU.ActiveCfg = Debug
-		{C6559BC7-6946-4A6F-99EE-6889BAB44424}.Release|Any CPU.ActiveCfg = Release
-		{C6559BC7-6946-4A6F-99EE-6889BAB44424}.Release|Any CPU.Build.0 = Release
+		{C6559BC7-6946-4A6F-99EE-6889BAB44424}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6559BC7-6946-4A6F-99EE-6889BAB44424}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6559BC7-6946-4A6F-99EE-6889BAB44424}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFFDB709-D0D2-4ECB-B0D3-F242AE1BFAC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFFDB709-D0D2-4ECB-B0D3-F242AE1BFAC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFFDB709-D0D2-4ECB-B0D3-F242AE1BFAC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFFDB709-D0D2-4ECB-B0D3-F242AE1BFAC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
