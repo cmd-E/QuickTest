@@ -15,13 +15,37 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_2444D9B99346B10F1EF6A2B7111170B9"
-        "OwnerKey" = "8:_05BE9791D5FB4949B7BDFF0306309530"
+        "MsmKey" = "8:_05BE9791D5FB4949B7BDFF0306309530"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_05BE9791D5FB4949B7BDFF0306309530"
+        "MsmKey" = "8:_7A41346EBCA54DBE8EACF45B0B223041"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_156C9F631AD1FC40C7BD63BDD75E4AD9"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1A3452D55B5AB46D72097C709FA11A33"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6511BE8C6D3518C55DF959A685B6040A"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_76B0552D7EDF85E676995D33D5AADB75"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -33,86 +57,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_156C9F631AD1FC40C7BD63BDD75E4AD9"
-        "OwnerKey" = "8:_76B0552D7EDF85E676995D33D5AADB75"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_156C9F631AD1FC40C7BD63BDD75E4AD9"
-        "OwnerKey" = "8:_05BE9791D5FB4949B7BDFF0306309530"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_1A3452D55B5AB46D72097C709FA11A33"
-        "OwnerKey" = "8:_05BE9791D5FB4949B7BDFF0306309530"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_1A3452D55B5AB46D72097C709FA11A33"
-        "OwnerKey" = "8:_6511BE8C6D3518C55DF959A685B6040A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_1A3452D55B5AB46D72097C709FA11A33"
-        "OwnerKey" = "8:_76B0552D7EDF85E676995D33D5AADB75"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_6511BE8C6D3518C55DF959A685B6040A"
-        "OwnerKey" = "8:_76B0552D7EDF85E676995D33D5AADB75"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_6511BE8C6D3518C55DF959A685B6040A"
-        "OwnerKey" = "8:_05BE9791D5FB4949B7BDFF0306309530"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_76B0552D7EDF85E676995D33D5AADB75"
-        "OwnerKey" = "8:_05BE9791D5FB4949B7BDFF0306309530"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_ADAAE9CCE421405BA58E6CCB45BEC8BF"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_05BE9791D5FB4949B7BDFF0306309530"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_76B0552D7EDF85E676995D33D5AADB75"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_6511BE8C6D3518C55DF959A685B6040A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_156C9F631AD1FC40C7BD63BDD75E4AD9"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_1A3452D55B5AB46D72097C709FA11A33"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -242,21 +188,10 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_2444D9B99346B10F1EF6A2B7111170B9"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_05BE9791D5FB4949B7BDFF0306309530"
             {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
-                "ScatterAssemblies"
-                {
-                    "_2444D9B99346B10F1EF6A2B7111170B9"
-                    {
-                    "Name" = "8:System.Net.Http.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\packages\\Microsoft.NETFramework.ReferenceAssemblies.net461.1.0.3\\build\\.NETFramework\\v4.6.1\\System.Net.Http.dll"
-            "TargetName" = "8:"
+            "SourcePath" = "8:..\\.artifacts\\installer-payload\\QuickTest.exe"
+            "TargetName" = "8:QuickTest.exe"
             "Tag" = "8:"
             "Folder" = "8:_060FAC4A63E34CE485EF904E3770B1D3"
             "Condition" = "8:"
@@ -269,11 +204,110 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7A41346EBCA54DBE8EACF45B0B223041"
+            {
+            "SourcePath" = "8:..\\.artifacts\\installer-payload\\QuickTest.exe.config"
+            "TargetName" = "8:QuickTest.exe.config"
+            "Tag" = "8:"
+            "Folder" = "8:_060FAC4A63E34CE485EF904E3770B1D3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_156C9F631AD1FC40C7BD63BDD75E4AD9"
+            {
+            "SourcePath" = "8:..\\.artifacts\\installer-payload\\Syncfusion.Licensing.dll"
+            "TargetName" = "8:Syncfusion.Licensing.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_060FAC4A63E34CE485EF904E3770B1D3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1A3452D55B5AB46D72097C709FA11A33"
+            {
+            "SourcePath" = "8:..\\.artifacts\\installer-payload\\Syncfusion.Compression.Base.dll"
+            "TargetName" = "8:Syncfusion.Compression.Base.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_060FAC4A63E34CE485EF904E3770B1D3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6511BE8C6D3518C55DF959A685B6040A"
+            {
+            "SourcePath" = "8:..\\.artifacts\\installer-payload\\Syncfusion.OfficeChart.Base.dll"
+            "TargetName" = "8:Syncfusion.OfficeChart.Base.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_060FAC4A63E34CE485EF904E3770B1D3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_76B0552D7EDF85E676995D33D5AADB75"
+            {
+            "SourcePath" = "8:..\\.artifacts\\installer-payload\\Syncfusion.DocIO.Base.dll"
+            "TargetName" = "8:Syncfusion.DocIO.Base.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_060FAC4A63E34CE485EF904E3770B1D3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_09A4A067BB9A47DF9EE1034A6A67DF6E"
             {
             "SourcePath" = "8:..\\LICENSE.rtf"
@@ -292,130 +326,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_156C9F631AD1FC40C7BD63BDD75E4AD9"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Syncfusion.Licensing, Version=19.3460.0.47, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_156C9F631AD1FC40C7BD63BDD75E4AD9"
-                    {
-                    "Name" = "8:Syncfusion.Licensing.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\packages\\Syncfusion.Licensing.19.3.0.47\\lib\\net46\\Syncfusion.Licensing.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_060FAC4A63E34CE485EF904E3770B1D3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1A3452D55B5AB46D72097C709FA11A33"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Syncfusion.Compression.Base, Version=19.3460.0.47, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_1A3452D55B5AB46D72097C709FA11A33"
-                    {
-                    "Name" = "8:Syncfusion.Compression.Base.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\packages\\Syncfusion.Compression.Base.19.3.0.47\\lib\\net46\\Syncfusion.Compression.Base.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_060FAC4A63E34CE485EF904E3770B1D3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6511BE8C6D3518C55DF959A685B6040A"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Syncfusion.OfficeChart.Base, Version=19.3460.0.47, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_6511BE8C6D3518C55DF959A685B6040A"
-                    {
-                    "Name" = "8:Syncfusion.OfficeChart.Base.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\packages\\Syncfusion.OfficeChart.Base.19.3.0.47\\lib\\net46\\Syncfusion.OfficeChart.Base.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_060FAC4A63E34CE485EF904E3770B1D3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_76B0552D7EDF85E676995D33D5AADB75"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Syncfusion.DocIO.Base, Version=19.3460.0.47, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_76B0552D7EDF85E676995D33D5AADB75"
-                    {
-                    "Name" = "8:Syncfusion.DocIO.Base.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\packages\\Syncfusion.DocIO.WinForms.19.3.0.47\\lib\\net46\\Syncfusion.DocIO.Base.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_060FAC4A63E34CE485EF904E3770B1D3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_ADAAE9CCE421405BA58E6CCB45BEC8BF"
@@ -1136,34 +1046,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_05BE9791D5FB4949B7BDFF0306309530"
-            {
-            "SourcePath" = "8:"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_060FAC4A63E34CE485EF904E3770B1D3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:"
-            "OutputGroupCanonicalName" = "8:Built"
-            "OutputProjectGuid" = "8:{D763E45B-A6FB-49DF-886F-137BCEC42347}"
-            "ShowKeyOutput" = "11:TRUE"
-                "ExcludeFilters"
-                {
-                }
-            }
+
         }
     }
 }

@@ -60,7 +60,7 @@ jobs:
         run: ./tests/run-integration-checks.ps1
 
       - name: Build and inspect Windows installer
-        run: ./QuickTestSetup/build-installer.ps1 -SkipApplicationBuild
+        run: ./QuickTestSetup/build-installer.ps1 -SkipRestore
 
       - name: Upload Windows installer
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2

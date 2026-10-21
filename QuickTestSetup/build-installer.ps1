@@ -1,11 +1,11 @@
 param(
     [ValidateSet('Debug', 'Release')][string]$Configuration = 'Release',
     [string]$VisualStudioPath,
-    [switch]$SkipApplicationBuild
+    [switch]$SkipRestore
 )
 $ErrorActionPreference = 'Stop'
 $root = Split-Path $PSScriptRoot -Parent
-if (!$SkipApplicationBuild) { & (Join-Path $root 'tests/build.ps1') }
+if (!$SkipRestore) { & (Join-Path $root 'tests/build.ps1') }
 if (!$VisualStudioPath) {
     $vswhere = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio/Installer/vswhere.exe'
     if (!(Test-Path -LiteralPath $vswhere)) { throw 'Visual Studio 2022/2026 is required to build .vdproj projects.' }
@@ -16,6 +16,14 @@ $disableOutOfProc = Join-Path $VisualStudioPath 'Common7/IDE/CommonExtensions/Mi
 if (!(Test-Path -LiteralPath $devenv) -or !(Test-Path -LiteralPath $disableOutOfProc)) {
     throw 'Install Microsoft Visual Studio Installer Projects 2022 (supports VS 2022 and 2026), restart Visual Studio, and retry. MSBuild alone cannot build .vdproj.'
 }
+
+# Compile using restored reference assemblies, without asking the IDE to load
+# an application targeting pack that is absent from modern hosted images.
+$payload = Join-Path $root '.artifacts/installer-payload'
+$msbuild = Join-Path $VisualStudioPath 'MSBuild/Current/Bin/MSBuild.exe'
+& $msbuild (Join-Path $root 'QuickTest/QuickTest.csproj') /t:Rebuild "/p:Configuration=$Configuration" `
+    "/p:OutputPath=$payload/" "/p:IntermediateOutputPath=$root/.artifacts/installer-obj/" /nologo /verbosity:minimal
+if ($LASTEXITCODE -ne 0) { throw 'Application build for installer failed.' }
 
 # Microsoft's documented prerequisite for command-line .vdproj builds.
 Push-Location -LiteralPath (Split-Path $disableOutOfProc -Parent)
@@ -31,7 +39,7 @@ foreach ($name in @('QuickTestSetup.msi', 'setup.exe')) {
     $previous = Join-Path $output $name
     if (Test-Path -LiteralPath $previous) { Remove-Item -LiteralPath $previous }
 }
-# Keep IDE setup builds separate from SDK test-project design-time restoration.
+# The IDE solution contains only the setup project and consumes explicit files.
 if (Test-Path -LiteralPath $log) { Remove-Item -LiteralPath $log }
 $arguments = @(('"' + (Join-Path $PSScriptRoot 'QuickTestSetup.sln') + '"'), '/Rebuild', $Configuration,
     '/Out', ('"' + $log + '"'))
