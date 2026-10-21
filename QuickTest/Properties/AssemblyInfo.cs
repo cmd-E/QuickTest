@@ -34,5 +34,6 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.4.0")]
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("QuickTest.Tests")]
 [assembly: AssemblyFileVersion("1.0.4.0")]
 [assembly: NeutralResourcesLanguage("ru")]

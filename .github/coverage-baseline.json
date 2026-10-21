@@ -1,0 +1,13 @@
+{
+  "assembly": "QuickTest",
+  "minimumLinePercent": {
+    "QuickTest.Classes.Question": 100,
+    "QuickTest.Classes.TaggedQuestionParser": 100,
+    "QuickTest.Classes.TestSession": 100,
+    "QuickTest.Classes.SessionQuestion": 100,
+    "QuickTest.Classes.CheckForUpdates": 100,
+    "QuickTest.Classes.CheckForUpdates.<CheckUsing>d__4": 100,
+    "QuickTest.Classes.DocumentParser": 100,
+    "QuickTest.Classes.HSV": 100
+  }
+}
